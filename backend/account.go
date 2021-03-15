@@ -81,10 +81,11 @@ func getBalance(address string) string {
 func getTransactionsByPage(address, from, to, page string) (out []types.TransactionBasicInfo) {
 	p, err := strconv.Atoi(page)
 	if err != nil {
-		return nil
+		p = 0
 	}
 	if p == 0 {
-		p = 1
+		out = getTransactions(address, from, to)
+		return
 	}
 	if p == 1 {
 		//always get newest info from node when page = 1
@@ -154,24 +155,24 @@ func cacheAndSplitTxs(address string, txs []types.TransactionBasicInfo, page int
 
 func getTransactions(address, from, to string) (out []types.TransactionBasicInfo) {
 	r := types.RequestInfo{}
-	if from == "true" && to == "true" {
-		r = types.RequestInfo{
-			Jsonrpc: "2.0",
-			Method:  "moe_queryTxByAddr",
-			Params:  []interface{}{address, "0x1", "latest"},
-			Id:      1,
-		}
-	} else if to == "true" {
+	if from != "true" && to == "true" {
 		r = types.RequestInfo{
 			Jsonrpc: "2.0",
 			Method:  "moe_queryTxByDst",
 			Params:  []interface{}{address, "0x1", "latest"},
 			Id:      1,
 		}
-	} else {
+	} else if from == "true" && to != "true" {
 		r = types.RequestInfo{
 			Jsonrpc: "2.0",
 			Method:  "moe_queryTxBySrc",
+			Params:  []interface{}{address, "0x1", "latest"},
+			Id:      1,
+		}
+	} else {
+		r = types.RequestInfo{
+			Jsonrpc: "2.0",
+			Method:  "moe_queryTxByAddr",
 			Params:  []interface{}{address, "0x1", "latest"},
 			Id:      1,
 		}

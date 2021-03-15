@@ -239,15 +239,21 @@ func GetErc20HistoryTransferLogsByAccount(tokenAddr, accountAddr string) []Log {
 func GetErc20TransferTxsFromLogs(logs []Log, page string) []types.TransactionBasicInfo {
 	l := len(logs)
 	p, err := strconv.Atoi(page)
-	fmt.Println(err)
 	if err != nil {
-		return nil
+		p = 0
 	}
-	if p < 1 || p*25 > l+25 {
+	if p < 0 {
+		p = 0
+	}
+	if p*25 > l+25 {
 		return nil
 	}
 	end := p * 25
 	if end > l {
+		end = l
+	}
+	if p == 0 {
+		p = 1
 		end = l
 	}
 	infos := make([]types.TransactionBasicInfo, len(logs))
