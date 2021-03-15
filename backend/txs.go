@@ -33,7 +33,7 @@ func GetBlockTxs(height string) []byte {
 	bTxs := BlockTxs{Block: height}
 	r := types.RequestInfo{
 		Jsonrpc: "2.0",
-		Method:  "eth_getTransactionsByBlockNumber",
+		Method:  "moe_getTxListByHeight",
 		Params:  []interface{}{height},
 		Id:      1,
 	}
@@ -53,7 +53,7 @@ func GetBlockTxs(height string) []byte {
 	for i, tx := range txs {
 		bTxs.Transactions[i] = GetTransactionBasicInfoFromTx(tx)
 	}
-	out, _ := json.MarshalIndent(bTxs, "", "")
+	out, _ := json.MarshalIndent(bTxs, "", "    ")
 	return out
 }
 
