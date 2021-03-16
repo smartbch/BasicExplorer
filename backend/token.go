@@ -78,7 +78,18 @@ func GetTokenInfo(tokenAddress, accountAddress, page string) []byte {
 		if t.Symbol == "" {
 			return nil
 		} else {
-			t.Symbol = t.Symbol[2+64*2:] //fast string abi decode
+			t.Symbol = t.Symbol[2+64*2:]
+			tmp := t.Symbol
+			result := ""
+			for i := 0; i < len(t.Symbol)/2; i++ {
+				d, _ := strconv.ParseInt(tmp[:2], 16, 8)
+				if d == 0 {
+					break
+				}
+				result += string(rune(d))
+				tmp = tmp[2:]
+			}
+			t.Symbol = result //fast string abi decode
 		}
 		s := simpleTokenInfo{
 			Symbol:   t.Symbol,
@@ -191,14 +202,14 @@ func GetErc20HistoryTransferLogs(address string) []Log {
 	body, _ := ioutil.ReadAll(resp.Body)
 	res := types.ResponseInfo{}
 	err := json.Unmarshal(body, &res)
-	fmt.Println("GET_LOGS:" + string(body))
+	//.Println("GET_LOGS:" + string(body))
 	if err != nil {
 		panic(err)
 	}
 	var logs []Log
 	_ = json.Unmarshal(res.Result, &logs)
-	fmt.Println("LOGS:")
-	fmt.Println(logs)
+	//fmt.Println("LOGS:")
+	//fmt.Println(logs)
 	return logs
 }
 
@@ -225,13 +236,13 @@ func GetErc20HistoryTransferLogsByAccount(tokenAddr, accountAddr string) []Log {
 	body, _ := ioutil.ReadAll(resp.Body)
 	res := types.ResponseInfo{}
 	err := json.Unmarshal(body, &res)
-	fmt.Println(string(body))
+	//fmt.Println(string(body))
 	if err != nil {
 		panic(err)
 	}
 	var logs []Log
 	_ = json.Unmarshal(res.Result, &logs)
-	fmt.Println(logs)
+	//fmt.Println(logs)
 	return logs
 }
 
