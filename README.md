@@ -1,2 +1,2 @@
-# BasicBrowser
-A browser for moeing-chain, with only basic features
+# BasicExplorer
+An explorer for smartBCH, with only basic features
