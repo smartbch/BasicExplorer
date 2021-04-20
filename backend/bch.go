@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	//"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -17,6 +16,7 @@ func HandleBchPrice(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//var p price = "400.00"
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	p := GetPriceFromCoinMarket()
 	out, _ := json.Marshal(p)

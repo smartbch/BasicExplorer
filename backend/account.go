@@ -35,6 +35,9 @@ func HandleAccount(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method is not supported.", http.StatusNotFound)
 		return
 	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
 	u, _ := url.Parse(r.RequestURI)
 	address := path.Base(u.Path)
 	fmt.Println(address)

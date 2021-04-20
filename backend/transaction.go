@@ -52,6 +52,9 @@ func HandleTransactionInfo(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method is not supported.", http.StatusNotFound)
 		return
 	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
 	u, _ := url.Parse(r.RequestURI)
 	hash := path.Base(u.Path)
 	out := GetTransactionInfo(hash)
