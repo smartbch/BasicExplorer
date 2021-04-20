@@ -33,7 +33,7 @@ func GetBlockTxs(height string) []byte {
 	bTxs := BlockTxs{Block: height}
 	r := types.RequestInfo{
 		Jsonrpc: "2.0",
-		Method:  "moe_getTxListByHeight",
+		Method:  "sbch_getTxListByHeight",
 		Params:  []interface{}{height},
 		Id:      1,
 	}

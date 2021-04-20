@@ -158,21 +158,21 @@ func getTransactions(address, from, to string) (out []types.TransactionBasicInfo
 	if from != "true" && to == "true" {
 		r = types.RequestInfo{
 			Jsonrpc: "2.0",
-			Method:  "moe_queryTxByDst",
+			Method:  "sbch_queryTxByDst",
 			Params:  []interface{}{address, "0x1", "latest"},
 			Id:      1,
 		}
 	} else if from == "true" && to != "true" {
 		r = types.RequestInfo{
 			Jsonrpc: "2.0",
-			Method:  "moe_queryTxBySrc",
+			Method:  "sbch_queryTxBySrc",
 			Params:  []interface{}{address, "0x1", "latest"},
 			Id:      1,
 		}
 	} else {
 		r = types.RequestInfo{
 			Jsonrpc: "2.0",
-			Method:  "moe_queryTxByAddr",
+			Method:  "sbch_queryTxByAddr",
 			Params:  []interface{}{address, "0x1", "latest"},
 			Id:      1,
 		}
