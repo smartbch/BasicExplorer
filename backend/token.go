@@ -25,6 +25,9 @@ func HandleToken(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method is not supported.", http.StatusNotFound)
 		return
 	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
 	u, _ := url.Parse(r.RequestURI)
 	tokenAddress := path.Base(u.Path)
 	values, _ := url.ParseQuery(u.RawQuery)
@@ -39,6 +42,9 @@ func HandleTokens(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method is not supported.", http.StatusNotFound)
 		return
 	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
 	u, _ := url.Parse(r.RequestURI)
 	symbol := path.Base(u.Path)
 	out := GetTokensBySymbol(symbol)
@@ -217,7 +223,7 @@ func GetErc20HistoryTransferLogs(address string) []Log {
 func GetErc20HistoryTransferLogsByAccount(tokenAddr, accountAddr string) []Log {
 	r := types.RequestInfo{
 		Jsonrpc: "2.0",
-		Method:  "moe_queryLogs",
+		Method:  "sbch_queryLogs",
 		Params: []interface{}{
 			tokenAddr,
 			[]string{

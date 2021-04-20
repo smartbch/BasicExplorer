@@ -18,6 +18,9 @@ func HandleBlockTxs(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method is not supported.", http.StatusNotFound)
 		return
 	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
 	u, _ := url.Parse(r.RequestURI)
 	height := path.Base(u.Path)
 	out := GetBlockTxs(height)
@@ -33,7 +36,7 @@ func GetBlockTxs(height string) []byte {
 	bTxs := BlockTxs{Block: height}
 	r := types.RequestInfo{
 		Jsonrpc: "2.0",
-		Method:  "moe_getTxListByHeight",
+		Method:  "sbch_getTxListByHeight",
 		Params:  []interface{}{height},
 		Id:      1,
 	}

@@ -5,45 +5,45 @@ import (
 )
 
 type RequestInfo struct {
-	Jsonrpc string
-	Method  string
-	Params  []interface{}
-	Id      uint
+	Jsonrpc string        `json:"jsonrpc"`
+	Method  string        `json:"method"`
+	Params  []interface{} `json:"params"`
+	Id      uint          `json:"id"`
 }
 
 type ErrorInfo struct {
-	Code    uint
-	Message string
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
 
 type ResponseInfo struct {
-	Jsonrpc string
-	Id      uint
-	Result  json.RawMessage
-	Error   ErrorInfo
+	Jsonrpc string          `json:"jsonrpc"`
+	Id      uint            `json:"id"`
+	Result  json.RawMessage `json:"result"`
+	Error   ErrorInfo       `json:"error"`
 }
 
 type Block struct {
-	Number            string
-	Hash              string
-	ParentHash        string
-	Miner             string
-	Size              string
-	GasLimit          uint
-	GasUsed           string
-	Timestamp         string
-	TransactionsCount string
-	BlockReward       string
-	StateRoot         string
-	TransactionsRoot  string
-	Transactions      []string
+	Number            string   `json:"number"`
+	Hash              string   `json:"hash"`
+	ParentHash        string   `json:"parentHash"`
+	Miner             string   `json:"miner"`
+	Size              string   `json:"size"`
+	GasLimit          uint     `json:"gasLimit"`
+	GasUsed           string   `json:"gasUsed"`
+	Timestamp         string   `json:"timestamp"`
+	TransactionsCount string   `json:"transactionsCount"`
+	BlockReward       string   `json:"blockReward"`
+	StateRoot         string   `json:"stateRoot"`
+	TransactionsRoot  string   `json:"transactionsRoot"`
+	Transactions      []string `json:"transactions"`
 }
 
 type TransactionBasicInfo struct {
-	Hash        string
-	BlockNumber string
-	From        string
-	To          string
-	Age         string
-	Value       string
+	Hash        string `json:"hash"`
+	BlockNumber string `json:"blockNumber"`
+	From        string `json:"from"`
+	To          string `json:"to"`
+	Age         string `json:"age"`
+	Value       string `json:"value"`
 }
